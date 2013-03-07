@@ -1,0 +1,301 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta29.2.dtd" >
+   <PATCH nodename="C:\vvvv\v4_repo\plugins\JitterNodes\Jitter Matrix Decoder (Raw) help.v4p" systemname="Jitter Matrix Decoder (Raw) help" filename="C:\vvvv\v4_repo\plugins\JitterNodes\Jitter Matrix Decoder (Raw) help.v4p">
+   <BOUNDS type="Window" left="2925" top="1635" width="14130" height="11640">
+   </BOUNDS>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="7305" top="1230" width="1980" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="7305" top="1230" width="5370" height="525">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Jitter Matrix Decoder (Raw) help|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" values="16">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="0" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="7320" top="2040" width="3945" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="7320" top="2040" width="5325" height="2625">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Allows to decode matrices sent by Max/MSP/Jitter by trying to emulate the behaviour of jit.net.recv . Only works for two dimensional matrices of type 0 (char) and RGBA colors for now.&cr;&lf;&cr;&lf;Still lacks messaging support and does not return a latency chunk but should work fine anyways.&cr;&lf;&cr;&lf;Open jit.net.send helppatch in Max and set correct IP/port to test.&cr;&lf;&cr;&lf;motzi - 2013|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE systemname="Jitter Matrix Decoder (Raw)" filename="RawJitterMatrixNodes.dll" nodename="Jitter Matrix Decoder (Raw)" componentmode="Hidden" id="2">
+   <BOUNDS type="Node" left="1740" top="4440" width="2355" height="270">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="TCP (Network Server)" nodename="TCP (Network Server)" componentmode="Hidden" id="3">
+   <BOUNDS type="Node" left="1725" top="2715" width="1830" height="270">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="3" srcpinname="Output" dstnodeid="2" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="4" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="3510" top="3165" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3510" top="3165" width="1410" height="255">
+   </BOUNDS>
+   <PIN pinname="Default" slicecount="1" values="192.168.1.1">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="IP">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Remote Host|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="3" srcpinname="Remote Host" dstnodeid="4" dstpinname="Input String">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="5" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="3510" top="2175" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3510" top="2175" width="795" height="240">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="7474">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Local Port|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="5" srcpinname="Y Output Value" dstnodeid="3" dstpinname="Local Port">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="6" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="2325" top="1395" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2325" top="1395" width="480" height="480">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Enable">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="6" srcpinname="Y Output Value" dstnodeid="3" dstpinname="Enable">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="7" systemname="IOBox (Color)">
+   <BOUNDS type="Node" left="4035" top="5010" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="4035" top="5010" width="2565" height="1170">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Data Color|">
+   </PIN>
+   <PIN pinname="Columns" slicecount="1" values="10">
+   </PIN>
+   <PIN pinname="Show Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Data Color" dstnodeid="7" dstpinname="Color Input">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="8" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="2910" top="5040" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2910" top="5040" width="795" height="480">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Y Input Value">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="|0, 0|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Dim">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Dim" dstnodeid="8" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="3495" top="6660" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3495" top="6660" width="1740" height="345">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Data Value|">
+   </PIN>
+   <PIN pinname="Columns" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Data Value" dstnodeid="9" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="10" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="6000" top="6825" width="2970" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6000" top="6825" width="3525" height="1305">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Data Value and Data Color are actually the same.&cr;&lf;&cr;&lf;Data Value outputs the raw byte data as sent by Max (in form ARGB).&cr;&lf;Data Color decodes this format to VVVV-Colors.|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="2325" top="5835" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2325" top="5835" width="795" height="240">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Dim Count|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Dim Count" dstnodeid="11" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="12" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Node" left="1755" top="5250" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1755" top="5250" width="795" height="240">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Plane Count|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="2" srcpinname="Plane Count" dstnodeid="12" dstpinname="Y Input Value">
+   </LINK>
+   <NODE systemname="RGB (Color Join)" nodename="RGB (Color Join)" componentmode="Hidden" id="16">
+   <BOUNDS type="Node" left="3510" top="8235" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Red" visible="1">
+   </PIN>
+   <PIN pinname="Green" visible="1">
+   </PIN>
+   <PIN pinname="Blue" visible="1">
+   </PIN>
+   <PIN pinname="Alpha" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE systemname="Unzip (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Unzip (Value)" componentmode="Hidden" id="15">
+   <BOUNDS type="Node" left="3510" top="7770" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output Count" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Output 1" visible="1">
+   </PIN>
+   <PIN pinname="Output 2" visible="1">
+   </PIN>
+   <PIN pinname="Output 3" visible="1">
+   </PIN>
+   <PIN pinname="Output 4" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="3510" top="7770">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Divide (Value)" nodename="Divide (Value)" componentmode="Hidden" id="14">
+   <BOUNDS type="Node" left="3510" top="7335" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" slicecount="1" values="255">
+   </PIN>
+   <PIN pinname="Input" visible="1" slicecount="400" values="152,172,6,134,79,4,186,213,32,123,36,11,190,214,151,231,3,113,163,171,234,166,38,33,187,110,164,220,134,71,213,189,212,87,126,183,154,207,130,213,1,22,6,103,177,74,138,174,33,128,169,190,61,76,162,30,79,138,237,175,195,87,156,195,44,61,3,108,136,175,153,22,193,182,31,89,117,234,0,9,59,223,65,248,6,218,43,214,33,55,202,121,253,131,66,50,127,179,113,126,35,245,188,244,99,202,10,127,88,82,15,205,160,232,204,9,129,239,85,198,151,96,219,3,237,30,68,203,128,18,206,116,134,243,94,65,173,6,144,90,237,226,172,54,158,118,223,60,202,74,169,166,197,3,147,166,252,43,35,205,22,216,131,158,222,139,197,229,76,54,7,67,150,255,161,56,116,13,147,106,1,32,13,86,226,97,49,73,167,124,22,143,112,237,13,234,209,153,40,71,219,170,48,158,5,120,104,239,205,167,137,76,65,246,114,202,120,41,196,247,24,187,8,170,22,215,22,29,195,135,179,58,5,44,122,51,226,46,254,85,127,111,236,92,175,81,168,77,120,117,123,55,106,163,135,24,71,185,198,66,154,54,184,129,136,252,92,124,230,80,98,89,141,35,160,165,235,149,195,116,56,119,250,54,76,27,223,159,18,203,245,21,46,219,16,42,99,180,169,32,233,26,75,205,255,175,75,194,188,185,189,168,44,33,165,235,153,189,107,156,161,48,49,200,198,204,94,104,230,142,219,187,125,147,12,121,169,205,198,118,83,220,13,144,143,30,30,232,66,2,173,86,3,163,113,24,68,146,222,203,117,98,73,149,143,228,221,37,133,134,42,227,4,27,4,111,50,39,245,17,49,155,92,142,234,194,215,56,9,124,227,69,69,171,194,99,227,235,159,138">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="14" srcpinname="Output" dstnodeid="15" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="15" srcpinname="Output 1" dstnodeid="16" dstpinname="Alpha">
+   </LINK>
+   <LINK srcnodeid="15" srcpinname="Output 2" dstnodeid="16" dstpinname="Red">
+   </LINK>
+   <LINK srcnodeid="15" srcpinname="Output 3" dstnodeid="16" dstpinname="Green">
+   </LINK>
+   <LINK srcnodeid="15" srcpinname="Output 4" dstnodeid="16" dstpinname="Blue">
+   </LINK>
+   <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="14" dstpinname="Input">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="18" systemname="IOBox (Color)">
+   <BOUNDS type="Node" left="3495" top="8640" width="0" height="0">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3495" top="8640" width="2580" height="585">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Columns" slicecount="1" values="10">
+   </PIN>
+   <PIN pinname="Color Input" visible="1">
+   </PIN>
+   <PIN pinname="Show Value" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Chooser Style" slicecount="1" values="HSVAField">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="16" srcpinname="Output" dstnodeid="18" dstpinname="Color Input">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="19" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="8625" top="9780" width="720" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="8625" top="9780" width="720" height="270">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Also see|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE systemname="Jitter Matrix Encoder (Raw)" filename="RawJitterMatrixNodes.dll" nodename="Jitter Matrix Encoder (Raw)" componentmode="Hidden" id="20">
+   <BOUNDS type="Node" left="9420" top="9795" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   </PATCH>
