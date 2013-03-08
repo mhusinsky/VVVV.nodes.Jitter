@@ -9,9 +9,10 @@
 //	Can encode data to be recieved in Max with jit.net.recv
 // For details how a Jitter matrix is constructed see
 //	http://cycling74.com/sdk/MaxSDK-6.0.4/html/chapter_jit_networking.html
-//
 
 ////// version history
+// 130308: v0.2
+//  . now supports decoding of arbitrary plane count
 // 130301: v0.1
 //	. first alpha release
 //	. basic functionality for encoding and decoding of 1 or 2 dimensional matrices of type 0 (char) implemented
@@ -21,10 +22,11 @@
 ////// TODO
 // Decoder:
 //	. reply with latency chunk (see Max API docs)
+//  . high dimension sizes (> 40x40) result in memory problems
 //  . ...
 // Encoder:
 //	. Encode time right
-//	. handle more than 2 dimensions
+//	. handle more than 2 dimensions?
 // 	. ...
 
 //////licence
@@ -105,7 +107,7 @@ namespace VVVV.Nodes
 		
 		[Output("Data Value")]
 		ISpread<int> FData;
-		
+	
 		[Output("Data Color")]
 		ISpread<RGBAColor> FDataCol;
 		
@@ -130,7 +132,6 @@ namespace VVVV.Nodes
 				var inputStream = FStreamIn[i];
 				byte[] chunkId1 = new byte[4];
 				int chunkSize1 = 0;
-				
 				
 				byte[] chunkId2 = new byte[4];
 				int chunkSize2 = 0;
@@ -185,39 +186,66 @@ namespace VVVV.Nodes
 						
 						// process data for output
 						data = new byte[datasize];
-						
 						data = r.ReadBytes(datasize);
 						
-						int pixelCount = dim[0] * dim[1] * planeCount;
+						int pixelCount = dim[0] * dim[1];
 						int dataCount = (int)(datasize / planeCount);
-						FData.SliceCount = pixelCount;
-						FDataCol.SliceCount = dim[0] * dim[1];	// assumes 4 planes
+						FData.SliceCount = pixelCount * planeCount;
+						FDataCol.SliceCount = pixelCount;
 						
 						// how many bytes are used to fill up the block?
-						int fillSize = (dimstride[0] - dim[0] % dimstride[0]) % dimstride[0];
-						int xBlockSize = dim[0] + fillSize;
+						int padding = dimstride[1]-dimstride[0]*dim[0];
+						int xBlockSize = dim[0]*planeCount + padding;
 						
-						// index of elements (e.g. one pixel having 4 planes)
-						int index = 0;
-						for(int j=0; j<dataCount; j++)
+						// decode to values
+						int count = 0;
+						for(int j=0; j<datasize; j++)
 						{
-							// only consider data that is not a "filler"
-							if(j % xBlockSize < dim[0])
+							// only consider data that is not padding
+							if(j % xBlockSize < dim[0]*planeCount)
 							{
-								FData[index*planeCount] = data[j*planeCount];
-								FData[index*planeCount+1] = data[j*planeCount+1];
-								FData[index*planeCount+2] = data[j*planeCount+2];
-								FData[index*planeCount+3] = data[j*planeCount+3];
-								
-								// assuming there are 4 planes (ARGB)
+								FData[count] = data[j];
+								count++;
+							}
+						}
+						
+						// decode to color
+						if(planeCount<=4)
+						{
+							for(int j=0; j<dataCount;j++)
+							{
 								RGBAColor col = new RGBAColor();
-								col.A = data[j*planeCount] / 255.0;
-								col.R = data[j*planeCount+1] / 255.0;
-								col.G = data[j*planeCount+2] / 255.0;
-								col.B = data[j*planeCount+3] / 255.0;
-								FDataCol[index] = col;
-								
-								index++;
+								// cases emulate behaviour in max
+								switch(planeCount)
+								{
+									case 1:
+									col.R = FData[j*planeCount] /255.0;
+									col.G = FData[j*planeCount] /255.0;
+									col.B = FData[j*planeCount] /255.0;
+									col.A = 1;
+									break;
+									case 2:
+									col.G = FData[j*planeCount] / 255.0;
+									col.R = FData[j*planeCount+1] / 255.0;
+									col.B = FData[j*planeCount+1] / 255.0;
+									col.A = 1;
+									break;
+									case 3:
+									col.B = FData[j*planeCount] / 255.0;
+									col.R = FData[j*planeCount+1] / 255.0;
+									col.G = FData[j*planeCount+2] / 255.0;
+									col.A = 1;
+									break;
+									case 4:
+									col.A = FData[j*planeCount] / 255.0;
+									col.R = FData[j*planeCount+1] / 255.0;
+									col.G = FData[j*planeCount+2] / 255.0;
+									col.B = FData[j*planeCount+3] / 255.0;
+									break;
+									default:
+									break;
+								}
+								FDataCol[j] = col;
 							}
 						}
 					}
